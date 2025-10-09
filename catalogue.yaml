@@ -1,0 +1,71 @@
+- name: deploying catalogue service
+  hosts: catalogue
+  become: yes
+  tasks:
+  - name: disabling nodejs
+    ansible.builtin.command: dnf module disable nodejs -y
+
+  - name: enabling nodejs
+    ansible.builtin.command: dnf module enable nodejs:20 -y
+
+  - name: installing nodejs
+    ansible.builtin.dnf:
+     name: nodejs
+     state: present
+
+  - name: create system user
+    ansible.builtin.user:
+     name: roboshop
+     comm: "roboshop system user"
+     system: true
+     home: /app
+     path: /sbin/nologin
+
+  - name: create app directory
+    ansible.builtin.file:
+     state: directory
+     path: /app
+
+  - name: delete catalogue file
+    ansible.builtin.file:
+     path: /tmp/catalogue.zip
+     state: absent   
+
+  - name: download catalogue zip file
+    ansible.builtin.get_url:
+     url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
+     dest: /tmp/catalogue.zip
+
+  - name: unzip
+    ansible.builtin.unarchive:
+     src: /tmp/catalogue.zi
+     dest: /app
+     remote_src: true
+    
+  - name: install dependencies
+    community.general.npm:
+     path: /app
+
+  - name: copy service
+    ansible.builtin.copy:
+     src: catalogue.service
+     dest: /etc/systemd/system/catalogue.service
+
+  - name: install mongodb client
+    ansible.builtin.dnf:
+     name: mongodb-mongosh
+     state: present
+
+  - name: connect to mongodb
+    ansible.builtin.command: mongosh mongodb.daws-practice-fun.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"      
+    register: catalogue_output
+
+  - name: load catalogue products
+    ansible.builtin.shell: mongosh --host mongodb.daws-practice.fun </app/db/master-data.js
+
+  - name: start catalogue service
+    ansible.builtin.systemd_service:
+     deamon_reload: true
+     name: catalogue
+     state: restarted
+     enabled: true  
