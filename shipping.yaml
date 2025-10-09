@@ -60,7 +60,7 @@
 
   - name: load data into mysql database
     community.mysql.mysql_db:
-     login_host: mysql.dwas-practice.fun
+     login_host: mysql.daws-practice.fun
      login_user: root
      login_password: RoboShop@1
      state: import
