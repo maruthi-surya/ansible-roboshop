@@ -35,8 +35,8 @@
 
    - name: unzip files
      ansible.builtin.unarchive:
-      src: /tmp/foo.zip
-      dest: /usr/local/bin
+      src: /tmp/payment.zip
+      dest: /app
       remote_src: yes
 
    - name: install dependencies
