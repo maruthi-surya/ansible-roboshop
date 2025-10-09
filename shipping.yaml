@@ -8,8 +8,7 @@
      state: present
     loop:
     - maven
-    - mysql 
-    - PyMySQL
+    - mysql
 
   - name: create system user
     ansible.builtin.user:
