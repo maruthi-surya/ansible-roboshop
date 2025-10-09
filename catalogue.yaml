@@ -16,7 +16,7 @@
   - name: create system user
     ansible.builtin.user:
      name: roboshop
-     comm: "roboshop system user"
+     comment: "roboshop system user"
      system: true
      home: /app
      path: /sbin/nologin
