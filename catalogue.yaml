@@ -52,7 +52,7 @@
      dest: /etc/systemd/system/catalogue.service
 
   - name: install mongodb client
-    ansible.builtin.dnf:
+    ansible.builtin.package:
      name: mongodb-mongosh
      state: present
      
@@ -60,7 +60,7 @@
     ansible.builtin.copy:
       src: mongo.repo
       dest: /etc/yum.repos.d/mongo.repo
-      
+
   - name: connect to mongodb
     ansible.builtin.command: mongosh mongodb.daws-practice-fun.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"      
     register: catalogue_output
