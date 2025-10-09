@@ -9,6 +9,7 @@
     loop:
     - maven
     - mysql 
+    - PyMySQL
 
   - name: create system user
     ansible.builtin.user:
@@ -52,6 +53,11 @@
     ansible.builtin.copy:
      src: shipping.service
      dest: /etc/systemd/system/shipping.service
+
+  - name: install mysql python libraries
+    ansible.builtin.pip:
+      executable: pip3.9
+      name: PyMySQL  
 
   - name: load data into mysql database
     community.mysql.mysql_db:
