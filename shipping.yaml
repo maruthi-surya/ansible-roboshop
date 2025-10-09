@@ -24,7 +24,7 @@
 
   - name: delete zip file
     ansible.builtin.file:
-     state: directory
+     state: absent
      path: /tmp/shipping.zip
         
   - name: download shipping zip file
