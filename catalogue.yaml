@@ -62,7 +62,7 @@
      state: present
      
   - name: connect to mongodb
-    ansible.builtin.command: mongosh mongodb.daws-practice-fun.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"      
+    ansible.builtin.command: mongosh mongodb.daws-practice.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"      
     register: catalogue_output
 
   - name: load catalogue products
