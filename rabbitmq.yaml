@@ -3,7 +3,7 @@
   become: yes
   tasks:
   - name: insall rabbitmq
-    ansible.builtin,dnf:
+    ansible.builtin.dnf:
      name: rabbitmq-server
      state: present
 
