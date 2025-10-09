@@ -15,7 +15,7 @@
   - name: start rabbitmq service
     ansible.builtin.systemd_service:
      name: rabbitmq-server
-     start: restarted
+     start: started
      enabled: true
 
   - name: create user and set password
