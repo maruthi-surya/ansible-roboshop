@@ -6,8 +6,8 @@
    sg_id: sg-02704cfa1a0558868
    zone_id: Z09770583FTSAJKH9PBLF
    domain_name: "daws-practice.fun"   
-   instances:
-   - mongodb
+  #  instances:
+  #  - mongodb
   tasks:
   - name: create ec2 instance
     amazon.aws.ec2_instance:
